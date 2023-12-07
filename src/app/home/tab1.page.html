@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Home </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-searchbar show-clear-button="focus" clear-icon="trash-bin"></ion-searchbar>
+
+<ion-button id="open-picker-filter">Filter</ion-button>
+<ion-picker trigger="open-picker-filter"> </ion-picker>
+
+<ion-button id="open-picker">Order by</ion-button>
+<ion-picker
+  trigger="open-picker"
+  [columns]="pickerColumns"
+  [buttons]="pickerButtons"
+></ion-picker>
+
+<ion-segment [(ngModel)]="segment">
+  <ion-segment-button value="movies">
+    <ion-label>Movies</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="series">
+    <ion-label>Series</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content>
+  <div [hidden]="segment != 'movies'">
+    <ion-label>Movies</ion-label>
+  </div>
+
+  <div [hidden]="segment != 'series'">
+    <ion-label>Series</ion-label>
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "rt-app-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

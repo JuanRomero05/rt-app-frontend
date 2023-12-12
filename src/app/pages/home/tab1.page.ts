@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IonModal } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -6,6 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+
+  constructor() {
+    this.modalSearch = null as any
+  }
+
+  @ViewChild('searchModal') modalSearch: IonModal;
 
   segment: string = 'movies'
 
@@ -91,6 +98,8 @@ export class Tab1Page {
     },
   ];
 
-  constructor() { }
+  cancelModalSearch() {
+    this.modalSearch.dismiss(null, 'cancel');
+  }
 
 }

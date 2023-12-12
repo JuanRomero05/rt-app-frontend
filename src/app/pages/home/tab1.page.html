@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <div class="ion-text-end icon-search-home">
+    <ion-icon name="search-outline" color="dark" size="large"></ion-icon>
+  </div>
+</ion-header>
+
+<!-- <ion-searchbar show-clear-button="focus" clear-icon="trash-bin"></ion-searchbar> -->
+
+<div>
+  <ion-row>
+    <ion-col size="4">
+      <ion-button
+        id="open-picker-genre"
+        class="btn-width"
+        shape="round"
+        color="light"
+      >
+        Genre
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="4">
+      <ion-button class="btn-width" shape="round" color="light">
+        <ion-datetime-button
+          datetime="datetime"
+          class="btn-width"
+          shape="round"
+          color="light"
+        ></ion-datetime-button>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="4">
+      <ion-button
+        id="open-picker"
+        class="btn-width"
+        shape="round"
+        color="light"
+      >
+        Order by
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</div>
+
+<ion-picker
+  trigger="open-picker-genre"
+  [columns]="pickerColumnsGenre"
+  [buttons]="pickerButtonsGenre"
+></ion-picker>
+
+<ion-modal [keepContentsMounted]="true">
+  <ng-template>
+    <ion-datetime
+      id="datetime"
+      presentation="year"
+      [showDefaultButtons]="true"
+    ></ion-datetime>
+  </ng-template>
+</ion-modal>
+
+<ion-picker
+  trigger="open-picker"
+  [columns]="pickerColumnsOrderBy"
+  [buttons]="pickerButtonsOrderBy"
+></ion-picker>
+
+<ion-segment [(ngModel)]="segment">
+  <ion-segment-button value="movies">
+    <ion-label>Movies</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="series">
+    <ion-label>Series</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-content>
+  <div [hidden]="segment != 'movies'">
+    <app-movies></app-movies>
+  </div>
+
+  <div [hidden]="segment != 'series'">
+    <ion-label>Series</ion-label>
+  </div>
+</ion-content>

@@ -71,6 +71,88 @@
       size="large"
       class="handle-icon"
     ></ion-icon>
+    <ion-label class="handle-label">RATE</ion-label>
+  </ion-button>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title class="ion-text-start">
+        <!-- Aparece un icono u otro dependiendo de si es critico o publico -->
+        <ion-icon name="diamond-outline" class="handle-icon-critics"></ion-icon>
+        <ion-icon
+          name="beer-outline"
+          class="handle-margin handle-icon-public"
+        ></ion-icon>
+        FirstName and LastName
+      </ion-card-title>
+
+      <ion-card-subtitle class="ion-text-center">
+        <ion-button
+          fill="clear"
+          [color]="isClicked ? 'warning' : 'dark'"
+          (click)="toggleClicked()"
+        >
+          <ion-icon
+            [name]="isClicked ? 'star' : 'star-outline'"
+            class="handle-icon-starts-rate"
+          ></ion-icon>
+        </ion-button>
+        <ion-button
+          fill="clear"
+          [color]="isClicked ? 'warning' : 'dark'"
+          (click)="toggleClicked()"
+        >
+          <ion-icon
+            [name]="isClicked ? 'star' : 'star-outline'"
+            class="handle-icon-starts-rate"
+          ></ion-icon>
+        </ion-button>
+        <ion-button
+          fill="clear"
+          [color]="isClicked ? 'warning' : 'dark'"
+          (click)="toggleClicked()"
+        >
+          <ion-icon
+            [name]="isClicked ? 'star' : 'star-outline'"
+            class="handle-icon-starts-rate"
+          ></ion-icon>
+        </ion-button>
+        <ion-button
+          fill="clear"
+          [color]="isClicked ? 'warning' : 'dark'"
+          (click)="toggleClicked()"
+        >
+          <ion-icon
+            [name]="isClicked ? 'star' : 'star-outline'"
+            class="handle-icon-starts-rate"
+          ></ion-icon>
+        </ion-button>
+        <ion-button
+          fill="clear"
+          [color]="isClicked ? 'warning' : 'dark'"
+          (click)="toggleClicked()"
+        >
+          <ion-icon
+            [name]="isClicked ? 'star' : 'star-outline'"
+            class="handle-icon-starts-rate"
+          ></ion-icon>
+        </ion-button>
+      </ion-card-subtitle>
+
+      <ion-card-subtitle class="ion-text-end">
+        <ion-button fill="outline" color="success" shape="round">
+          Submit
+        </ion-button>
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-button fill="clear" color="dark">
+    <ion-icon
+      name="caret-forward-outline"
+      size="large"
+      class="handle-icon"
+    ></ion-icon>
     <ion-label class="handle-label">MOVIE INFO</ion-label>
   </ion-button>
 
@@ -92,4 +174,72 @@
     </p>
     <p><span class="handle-movie-info-titles">Adult: </span>OhYes!</p>
   </div>
+
+  <!-- Agregarle a este div la propiedad hidden para que se oculte cuando sea una peli -->
+  <div>
+    <ion-button fill="clear" color="dark">
+      <ion-icon
+        name="caret-forward-outline"
+        size="large"
+        class="handle-icon"
+      ></ion-icon>
+      <ion-label class="handle-label">SERIE INFO</ion-label>
+    </ion-button>
+
+    <div class="handle-movie-info">
+      <p>
+        <span class="handle-movie-info-titles">Description: </span>Lorem ipsum
+        dolor sit amet, consectetur adipisicing elit. Ab molestiae voluptas,
+        quia odit iusto, sit corporis nam earum quod voluptates doloribus
+        quisquam dicta numquam dignissimos ex, excepturi perferendis vel
+        nesciunt recusandae. Iure nam fugiat rerum sit repellendus unde labore
+        cumque!
+      </p>
+      <p><span class="handle-movie-info-titles">Genre: </span>SEXO</p>
+      <p>
+        <span class="handle-movie-info-titles">Original Language: </span
+        >Maracucho rajao
+      </p>
+      <p>
+        <span class="handle-movie-info-titles">Release Date: </span>69/69/6969
+      </p>
+      <p><span class="handle-movie-info-titles">Adult: </span>OhYes!</p>
+    </div>
+  </div>
+
+  <ion-button fill="clear" color="dark">
+    <ion-icon
+      name="caret-forward-outline"
+      size="large"
+      class="handle-icon"
+    ></ion-icon>
+    <ion-label class="handle-label">REVIEWS</ion-label>
+  </ion-button>
+
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="reviewForm">
+        <ion-item>
+          <ion-textarea
+            ngDefaultControl
+            formControlName="input-review"
+            placeholder="Post a review"
+            [counter]="true"
+            maxlength="270"
+          ></ion-textarea>
+          <ion-button
+            fill="outline"
+            shape="round"
+            [strong]="true"
+            [disabled]="!reviewForm.get('input-review')?.value"
+            (click)="postReview()"
+          >
+            Send
+          </ion-button>
+        </ion-item>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <app-reviews></app-reviews>
 </ion-content>

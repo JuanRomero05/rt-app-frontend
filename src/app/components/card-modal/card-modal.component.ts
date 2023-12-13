@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -8,9 +9,24 @@ import { ModalController } from '@ionic/angular';
 })
 export class CardModalComponent implements OnInit {
 
-  constructor(private cardModalCtrl: ModalController) { }
+  isClicked = false;
+
+  reviewForm: FormGroup;
+
+  constructor(
+    private cardModalCtrl: ModalController,
+    public fb: FormBuilder
+  ) {
+    this.reviewForm = this.fb.group({
+      'input-review': new FormControl,
+    })
+  }
 
   ngOnInit() { }
+
+  toggleClicked() {
+    this.isClicked = !this.isClicked;
+  }
 
   cancel() {
     return this.cardModalCtrl.dismiss(null, 'cancel');
@@ -19,5 +35,10 @@ export class CardModalComponent implements OnInit {
   /* confirm() {
     return this.cardModalCtrl.dismiss()
   } */
+
+  postReview() {
+    console.log('a');
+
+  }
 
 }

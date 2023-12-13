@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon name="arrow-back-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Reply review</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-row class="wrapper">
+    <ion-col size="1">
+      <ion-icon name="beer-outline" class="handle-icon-public"></ion-icon>
+    </ion-col>
+    <ion-col size="11" class="padding-col">
+      <ion-row class="custom-text">
+        <ion-col size="12">
+          <span class="name">FirstName and LastName</span>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <div class="custom-text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus
+            id, porro dolores quisquam earum laudantium quae optio neque sed
+            perferendis!
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <span class="handle">69/69/6969</span>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="replyReviewForm">
+        <ion-item>
+          <ion-textarea
+            ngDefaultControl
+            formControlName="input-reply-review"
+            placeholder="Post a review"
+            [counter]="true"
+            maxlength="270"
+          ></ion-textarea>
+          <ion-button
+            fill="outline"
+            shape="round"
+            [strong]="true"
+            [disabled]="!replyReviewForm.get('input-reply-review')?.value"
+            (click)="postReplyReview()"
+          >
+            Send
+          </ion-button>
+        </ion-item>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <app-reviews></app-reviews>
+</ion-content>

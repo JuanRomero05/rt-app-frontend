@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardModalComponent } from './card-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReplyRatingModalComponent } from './reply-rating-modal.component';
 import { ReviewsModule } from '../reviews/reviews.module';
 
 
@@ -11,12 +11,11 @@ import { ReviewsModule } from '../reviews/reviews.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ReviewsModule
   ],
-  declarations: [CardModalComponent],
-  exports: [CardModalComponent],
+  declarations: [ReplyRatingModalComponent],
+  exports: [ReplyRatingModalComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class CardModalModule { }
+export class ReplyRatingModalModule { }

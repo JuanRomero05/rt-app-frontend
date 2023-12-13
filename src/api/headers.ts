@@ -1,0 +1,2 @@
+export const jsonHeader = { 'Content-Type': 'application/json' }
+export const auth = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAyNDQ2NjQzLCJleHAiOjE3MDUwMzg2NDN9.lTF-5jID9WaEG909HajFlWqcNgv-YHhnX4b94rBAd6k' }

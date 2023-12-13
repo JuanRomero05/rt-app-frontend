@@ -92,15 +92,27 @@
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-icon
-              name="close"
+              name="arrow-back-outline"
               (click)="cancelModalSearch()"
               class="handle-close-button"
             ></ion-icon>
           </ion-buttons>
-          <ion-searchbar
-            show-clear-button="focus"
-            clear-icon="trash-bin"
-          ></ion-searchbar>
+          <form [formGroup]="searchForm">
+            <ion-item>
+              <ion-input
+                formControlName="search"
+                placeholder="Search"
+                [clearInput]="true"
+              ></ion-input>
+            </ion-item>
+          </form>
+          <ion-buttons slot="end">
+            <ion-icon
+              name="search-outline"
+              (click)="sendSearchForm()"
+              class="handle-search-button"
+            ></ion-icon>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding"> </ion-content>

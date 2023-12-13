@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
 
 @Component({
@@ -8,13 +9,20 @@ import { IonModal } from '@ionic/angular';
 })
 export class Tab1Page {
 
-  constructor() {
-    this.modalSearch = null as any
-  }
-
   @ViewChild('searchModal') modalSearch: IonModal;
 
   segment: string = 'movies'
+
+  searchForm: FormGroup;
+
+  constructor(
+    public fb: FormBuilder,
+  ) {
+    this.modalSearch = null as any,
+      this.searchForm = this.fb.group({
+        search: new FormControl(''),
+      })
+  }
 
   public pickerColumnsGenre = [
     {
@@ -100,6 +108,11 @@ export class Tab1Page {
 
   cancelModalSearch() {
     this.modalSearch.dismiss(null, 'cancel');
+  }
+
+  sendSearchForm() {
+    console.log('a');
+
   }
 
 }

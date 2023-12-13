@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon name="arrow-back-outline" size="large"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Titulo de la pelicula/serie</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-card>
+    <img
+      src="../../../assets/cover3.png"
+      width="400"
+      height="350"
+      alt="Null image"
+    />
+
+    <ion-card-header>
+      <ion-card-title class="ion-text-center handle-title">
+        El entierro de la anaconda cabezona
+      </ion-card-title>
+
+      <ion-card-subtitle class="ion-text-center">2023</ion-card-subtitle>
+
+      <ion-card-subtitle>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-label class="handle-margin-text">3.8</ion-label>
+        <ion-icon name="diamond-outline" class="handle-icon-critics"></ion-icon>
+
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
+        <ion-label class="handle-margin-text">4.8</ion-label>
+        <ion-icon
+          name="beer-outline"
+          class="handle-margin handle-icon-public"
+        ></ion-icon>
+      </ion-card-subtitle>
+
+      <ion-card-subtitle class="ion-text-center">
+        <ion-button shape="round" fill="outline" color="secondary">
+          <ion-icon name="play" class="handle-margin"></ion-icon>
+          View trailer
+        </ion-button>
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- Icon Critics -->
+      <ion-icon
+        name="diamond-outline"
+        class="handle-margin handle-icon-critics"
+      ></ion-icon>
+      <ion-label class="ion-padding-end">4.6</ion-label>
+      <!-- Icon Publics -->
+      <ion-icon
+        name="beer-outline"
+        class="handle-margin handle-icon-public"
+      ></ion-icon>
+      <ion-label>3.2</ion-label>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

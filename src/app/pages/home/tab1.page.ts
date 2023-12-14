@@ -1,19 +1,31 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
+import { getAllGenres } from 'src/api/resources/genres';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit{
 
   @ViewChild('searchModal') modalSearch: IonModal;
 
-  segment: string = 'movies'
+  async ngOnInit() {
+    const request: any = await getAllGenres()
+    request.data.map((genre:any) => {
+      this.genreOptions.push({
+        text: genre.title,
+        value: genre.id
+      })
+    })
+  }
 
+  segment: string = 'movies'
   searchForm: FormGroup;
+  genreOptions: any[] = []
+  data: any[] = []
 
   constructor(
     public fb: FormBuilder,
@@ -27,32 +39,7 @@ export class Tab1Page {
   public pickerColumnsGenre = [
     {
       name: 'Genre',
-      options: [
-        {
-          text: 'Horror',
-          value: 'horror',
-        },
-        {
-          text: 'Action',
-          value: 'action',
-        },
-        {
-          text: 'Science Fiction',
-          value: 'science-fiction',
-        },
-        {
-          text: 'Drama',
-          value: 'drama',
-        },
-        {
-          text: 'Animation',
-          value: 'animation',
-        },
-        {
-          text: 'Documentary',
-          value: 'documentary',
-        },
-      ],
+      options: this.genreOptions
     },
   ];
 
@@ -111,8 +98,12 @@ export class Tab1Page {
   }
 
   sendSearchForm() {
-    console.log('a');
-
+    const query = this.searchForm.controls['search'].value
+    if (this.segment == 'movies') {
+      
+    }
+    if (this.segment == 'series') {
+      
+    }
   }
-
 }

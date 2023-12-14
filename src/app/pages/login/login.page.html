@@ -1,0 +1,58 @@
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center">
+    <ion-icon name="film-outline" color="danger" class="logo-size"></ion-icon>
+  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title><strong>Login</strong></ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="loginForm">
+        <ion-item>
+          <ion-input
+            formControlName="username"
+            label="Username"
+            labelPlacement="floating"
+            [clearInput]="true"
+          ></ion-input>
+        </ion-item>
+        &nbsp;
+        <ion-item>
+          <ion-input
+            #pwInput
+            formControlName="password"
+            type="password"
+            label="Password"
+            labelPlacement="floating"
+          >
+          </ion-input>
+          <ion-icon
+            [name]="eyeIcon"
+            slot="end"
+            (click)="togglePasswordVisibility()"
+          ></ion-icon>
+        </ion-item>
+      </form>
+      <br />
+
+      <div class="ion-text-center">
+        <ion-button
+          class="btn-width"
+          (click)="enterApp()"
+          shape="round"
+          fill="solid"
+          >Login</ion-button
+        >
+        <br />
+        <ion-button
+          class="btn-width"
+          shape="round"
+          fill="outline"
+          [routerLink]="['/signup']"
+          >Sign Up</ion-button
+        >
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

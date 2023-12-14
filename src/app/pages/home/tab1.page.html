@@ -1,3 +1,5 @@
+<ion-loading #loading spinner="crescent" class="custom-loading"></ion-loading>
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <form [formGroup]="searchForm">
@@ -89,10 +91,10 @@
   </ion-modal>
 
   <div [hidden]="segment != 'movies'">
-    <app-movies></app-movies>
+    <app-movies *ngFor="let movie of movies" [data]="movie"></app-movies>
   </div>
 
   <div [hidden]="segment != 'series'">
-    <app-movies></app-movies>
+    <app-movies *ngFor="let serie of series" [data]="serie"></app-movies>
   </div>
 </ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CardModalComponent } from '../card-modal/card-modal.component';
 
@@ -9,6 +9,8 @@ import { CardModalComponent } from '../card-modal/card-modal.component';
 })
 export class MoviesComponent implements OnInit {
 
+  @Input() data: any
+
   constructor(private cardModalCtrl: ModalController) { }
 
   ngOnInit() { }
@@ -18,6 +20,21 @@ export class MoviesComponent implements OnInit {
       component: CardModalComponent
     });
     modal.present();
+  }
+
+  setYear(date: string){
+    return new Date(date).getFullYear().toString()
+  }
+
+  setGenres(genres: any[]){
+    if (genres.length == 1)
+      return genres[0].title
+
+    if (genres.length == 2)
+      return `${genres[0].title}, ${genres[1].title}`
+
+    if (genres.length > 2)
+      return `${genres[0].title}, ${genres[1].title}, ...`
   }
 
 }

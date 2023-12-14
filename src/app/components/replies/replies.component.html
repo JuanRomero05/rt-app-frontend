@@ -26,22 +26,9 @@
         <span class="handle">{{ setDate(data.date) }}</span>
       </ion-col>
     </ion-row>
-
-    <ion-row class="ion-justify-content-center">
-      <!--Comentar-->
+    <ion-row>
       <ion-col>
-        <ion-button
-          fill="clear"
-          color="medium"
-          size="small"
-          (click)="openReplyRatingModal()"
-        >
-          <ion-icon name="chatbubble-outline" slot="start"></ion-icon>
-        </ion-button>
-      </ion-col>
-
-      <ion-col>
-        <ion-button fill="clear" color="medium" size="small" (click)="removeReview()">
+        <ion-button fill="clear" color="medium" size="small" (click)="removeReply()">
           <ion-icon name="trash-outline" slot="start"></ion-icon>
         </ion-button>
       </ion-col>

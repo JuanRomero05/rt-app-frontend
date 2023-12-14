@@ -1,0 +1,35 @@
+.handle-icon-critics {
+    color: yellow;
+    font-size: 32px;
+}
+
+.handle-icon-public {
+    color: red;
+    font-size: 32px;
+}
+
+.wrapper {
+    /* margin-top: 10px; */
+    border-bottom: 1px solid var(--ion-color-light);
+}
+
+.custom-text {
+    font-size: 16px;
+    margin-bottom: 5px;
+    /* Ajusta el valor según el espacio deseado entre líneas */
+    line-height: 1.5;
+    /* Ajusta el valor según el espacio deseado entre líneas */
+}
+
+.padding-col {
+    padding-left: 10px;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.handle {
+    color: var(--ion-color-medium);
+}

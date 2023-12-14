@@ -10,6 +10,7 @@ import { CardModalComponent } from '../card-modal/card-modal.component';
 export class MoviesComponent implements OnInit {
 
   @Input() data: any
+  @Input() IsTv: any
 
   constructor(private cardModalCtrl: ModalController) { }
 
@@ -17,7 +18,11 @@ export class MoviesComponent implements OnInit {
 
   async openCard() {
     const modal = await this.cardModalCtrl.create({
-      component: CardModalComponent
+      component: CardModalComponent,
+      componentProps: {
+        Id: this.data.id,
+        IsTv: this.IsTv
+      }
     });
     modal.present();
   }

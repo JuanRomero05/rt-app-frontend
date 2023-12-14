@@ -92,10 +92,10 @@
   </ion-modal>
 
   <div [hidden]="segment != 'movies'">
-    <app-movies *ngFor="let movie of movies" [data]="movie"></app-movies>
+    <app-movies *ngFor="let movie of movies" [data]="movie" [IsTv]="false"></app-movies>
   </div>
 
   <div [hidden]="segment != 'series'">
-    <app-movies *ngFor="let serie of series" [data]="serie"></app-movies>
+    <app-movies *ngFor="let serie of series" [data]="serie" [IsTv]="true"></app-movies>
   </div>
 </ion-content>

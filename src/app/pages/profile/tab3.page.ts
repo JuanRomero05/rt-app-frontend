@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/f
 import { Router } from '@angular/router';
 import { AlertController, IonMenu } from '@ionic/angular';
 import { IonModal } from '@ionic/angular/common';
+import { clearToken, clearUserId } from 'src/storage/auth';
 
 @Component({
   selector: 'app-tab3',
@@ -77,13 +78,9 @@ export class Tab3Page {
         {
           text: 'Confirm',
           handler: async () => {
-            // se eliminan los datos del almacenamiento local
-            /* await Preferences.remove({ key: 'token' })
-            await Preferences.remove({ key: 'id' })
-
-            this.restart() */
+            await clearToken()
+            await clearUserId()
             this.menu.close()
-
             // se redirige al login
             this.router.navigate(['/'])
           }

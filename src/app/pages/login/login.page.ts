@@ -74,6 +74,8 @@ export class LoginPage implements OnInit {
     await storeToken(request.data.token)
     const user = await getAuthUser() 
     await storeUserId(user.data.id)
+    username.setValue('')
+    password.setValue('')
     await this.router.navigate(['/tabs/home']);
   }
 }

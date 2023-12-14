@@ -39,8 +39,10 @@ export class CardModalComponent implements OnInit{
       request = await getMovieById(this.Id)
     }
     this.data = request.data
-    /* request = await getAuthUser()
-    this.user = request.data */
+
+    if (!this.data.posterUrl)
+      this.data.posterUrl = './../../assets/cover3.png'
+
     this.user = { 
       firstName: 'Angel',
       lastName: 'Di Maria', 

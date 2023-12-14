@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonMenu } from '@ionic/angular';
+import { AlertController, IonLoading, IonMenu } from '@ionic/angular';
 import { IonModal } from '@ionic/angular/common';
-import { getUserById } from 'src/api/resources/users';
+import { getUserById, updateUser } from 'src/api/resources/users';
 import { clearToken, clearUserId, getToken, getUserId } from 'src/storage/auth';
+import { createAlert } from 'src/utils/alert';
 
 @Component({
   selector: 'app-tab3',
@@ -22,6 +23,7 @@ export class Tab3Page implements OnInit {
   user: any
 
   @ViewChild('menu') menu: IonMenu;
+  @ViewChild('loading') loading: IonLoading;
   @ViewChild('editProfileModal') modalEditProfile: IonModal;
   @ViewChild('passwordInput') passwordInput: any;
   @ViewChild('repeatPasswordInput') repeatPasswordInput: any;
@@ -33,7 +35,7 @@ export class Tab3Page implements OnInit {
   ) {
     this.menu = null as any
     this.modalEditProfile = null as any
-
+    this.loading = null as any
     this.editProfileForm = this.fb.group({
       'firstName': new FormControl,
       'lastName': new FormControl,
@@ -47,19 +49,32 @@ export class Tab3Page implements OnInit {
     if (id){
       const request = await getUserById(parseInt(id))
       this.user = request.data
+      this.resetEditForm()
       return
     }
     await this.router.navigate(['/login'])
   }
 
   async ionViewWillEnter(){
+    this.loading.present()
     const id = await getUserId()
     if (id){
       const request = await getUserById(parseInt(id))
       this.user = request.data
+      this.resetEditForm()
+      this.loading.dismiss(null, 'cancel')
       return
     }
+    this.loading.dismiss(null, 'cancel')
     await this.router.navigate(['/login'])
+  }
+  
+  resetEditForm(){
+    const { controls } = this.editProfileForm
+    controls['firstName'].setValue(this.user.firstName)
+    controls['lastName'].setValue(this.user.lastName)
+    controls['password'].setValue('')
+    controls['repeatPassword'].setValue('')
   }
 
   togglePasswordVisibility() {
@@ -120,8 +135,53 @@ export class Tab3Page implements OnInit {
   }
 
   async saveEditData() {
-    await console.log('a');
-
+    const { controls } = this.editProfileForm
+    if (!controls['firstName'].value || !controls['lastName'].value){
+      const alert = await createAlert(
+        this.alertController,
+        'Update failed',
+        "Empty name or last name are not allowed"
+      )
+      await alert.present()
+      return
+    }
+    const body: any = { 
+      firstName: controls['firstName'].value,
+      lastName: controls['lastName'].value
+    }
+    // if password fields are not empty, password is evaluated
+    if (controls['password'].value || controls['repeatPassword'].value){
+      // password match
+      if (controls['password'].value != controls['repeatPassword'].value){
+        const alert = await createAlert(
+          this.alertController,
+          'Update failed',
+          "Passwords don't match"
+        )
+        await alert.present()
+        return
+      }
+      body.password = controls['password'].value
+    }
+    let request = await updateUser(this.user.id, body)
+    if (request.code != 200){
+      const alert = await createAlert(
+        this.alertController,
+        'Update failed',
+        request.msg
+      )
+      await alert.present()
+      return
+    }
+    request = await getUserById(request.data.id)
+    this.user = request.data
+    const alert = await createAlert(
+      this.alertController,
+      'Update succeed',
+      'Your account has been successfully updated'
+    )
+    await alert.present()
+    console.log(this.user)
+    this.resetEditForm()
   }
-
 }

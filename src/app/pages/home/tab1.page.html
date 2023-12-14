@@ -82,11 +82,12 @@
 
   <ion-modal [keepContentsMounted]="true">
     <ng-template>
-      <ion-datetime
+      <ion-datetime #datetime
         id="datetime"
         presentation="year"
         [showDefaultButtons]="true"
-      ></ion-datetime>
+      >
+    </ion-datetime>
     </ng-template>
   </ion-modal>
 

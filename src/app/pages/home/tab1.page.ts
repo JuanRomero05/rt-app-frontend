@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { IonLoading, IonModal } from '@ionic/angular';
+import { IonDatetime, IonLoading, IonModal } from '@ionic/angular';
 import { getAllGenres } from 'src/api/resources/genres';
 import { getAllMovies } from 'src/api/resources/movies';
 import { getAllShows } from 'src/api/resources/shows';
@@ -14,14 +14,14 @@ export class Tab1Page {
   
   @ViewChild('searchModal') modalSearch: IonModal;
   @ViewChild('loading') loading: IonLoading;
-  
+  @ViewChild('datetime') datetime: IonDatetime;
+
   segment: string = 'movies'
   searchForm: FormGroup;
   genreOptions: any[] = []
   movies: any[] = []
   series: any[] = []
   genre: number | undefined
-  year: string | undefined
   order: string | undefined
 
   constructor(
@@ -32,6 +32,7 @@ export class Tab1Page {
         search: new FormControl(''),
       })
     this.loading = null as any
+    this.datetime = null as any
   }
 
   async ionViewWillEnter() {
@@ -123,8 +124,10 @@ export class Tab1Page {
       options.order = this.order
     if (this.genre)
       options.genre = this.genre
-    if (this.year)
-      options.year = this.year
+    if (this.datetime.value)
+      options.year = new Date(<string> this.datetime.value).getFullYear().toString()
+
+    console.log(options)
 
     this.loading.present()
     if (this.segment == 'movies') {

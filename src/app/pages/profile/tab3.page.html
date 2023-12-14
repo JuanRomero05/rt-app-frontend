@@ -51,7 +51,7 @@
         <ion-row>
           <ion-col size="12">
             <ion-card-title class="handle-title">
-              FirstName and LastName
+              {{user.firstName}} {{user.lastName}}
             </ion-card-title>
           </ion-col>
         </ion-row>
@@ -61,7 +61,7 @@
     <ion-row class="ion-text-center">
       <ion-col size="12">
         <div class="handle-title handle-margin ion-text-center">
-          CRITIC / PUBLIC
+          {{user.isCritic ? 'Critic' : 'Public'}} user 
         </div>
       </ion-col>
     </ion-row>
@@ -116,7 +116,7 @@
     </ion-card-subtitle>
 
     <ion-card-subtitle class="ion-text-center handle-margin">
-      33 ratings
+      {{user.ratings}} ratings
     </ion-card-subtitle>
   </ion-card>
 
@@ -142,7 +142,7 @@
     </ion-card-subtitle>
 
     <ion-card-subtitle class="ion-text-center handle-margin-reviews">
-      5 reviews
+      {{user.reviews}} reviews
     </ion-card-subtitle>
   </ion-card>
 

@@ -1,15 +1,17 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonMenu } from '@ionic/angular';
 import { IonModal } from '@ionic/angular/common';
+import { getUserById } from 'src/api/resources/users';
+import { clearToken, clearUserId, getToken, getUserId } from 'src/storage/auth';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
+export class Tab3Page implements OnInit {
 
   editProfileForm: FormGroup;
 
@@ -17,6 +19,7 @@ export class Tab3Page {
   showRepeatPassword: boolean = false;
   eyeIcon: string = 'eye-outline';
   eyeIconRepeat: string = 'eye-outline';
+  user: any
 
   @ViewChild('menu') menu: IonMenu;
   @ViewChild('editProfileModal') modalEditProfile: IonModal;
@@ -39,11 +42,30 @@ export class Tab3Page {
     }, { validator: this.pwMatchValidator })
   }
 
+  async ngOnInit() {
+    const id = await getUserId()
+    if (id){
+      const request = await getUserById(parseInt(id))
+      this.user = request.data
+      return
+    }
+    await this.router.navigate(['/login'])
+  }
+
+  async ionViewWillEnter(){
+    const id = await getUserId()
+    if (id){
+      const request = await getUserById(parseInt(id))
+      this.user = request.data
+      return
+    }
+    await this.router.navigate(['/login'])
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordInput.type = this.showPassword ? 'text' : 'password';
     this.eyeIcon = this.showPassword ? 'eye-off' : 'eye-outline';
-
   }
 
   toggleRepeatPasswordVisibility() {
@@ -77,13 +99,9 @@ export class Tab3Page {
         {
           text: 'Confirm',
           handler: async () => {
-            // se eliminan los datos del almacenamiento local
-            /* await Preferences.remove({ key: 'token' })
-            await Preferences.remove({ key: 'id' })
-
-            this.restart() */
+            await clearToken()
+            await clearUserId()
             this.menu.close()
-
             // se redirige al login
             this.router.navigate(['/'])
           }

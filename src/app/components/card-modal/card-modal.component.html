@@ -5,14 +5,14 @@
         <ion-icon name="arrow-back-outline" size="large"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Titulo de la pelicula/serie</ion-title>
+    <ion-title>{{data.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-card>
     <img
-      src="../../../assets/cover3.png"
+      src={{data.posterUrl}}
       width="400"
       height="350"
       alt="Null image"
@@ -20,10 +20,10 @@
 
     <ion-card-header>
       <ion-card-title class="ion-text-center handle-title">
-        El entierro de Giovanni el grueso cabezon en Andrea mini
+        {{data.title}}
       </ion-card-title>
 
-      <ion-card-subtitle class="ion-text-center">2023</ion-card-subtitle>
+      <ion-card-subtitle class="ion-text-center">{{setYear(data.date)}}</ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-center">
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
@@ -31,13 +31,13 @@
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
-        <ion-label class="handle-margin-text">4.6</ion-label>
+        <ion-label class="handle-margin-text">{{data.criticScore}}</ion-label>
         <ion-icon name="diamond-outline" class="handle-icon-critics"></ion-icon>
       </ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-center">CRITICS</ion-card-subtitle>
 
-      <ion-card-subtitle class="ion-text-center">19 Ratings</ion-card-subtitle>
+      <ion-card-subtitle class="ion-text-center">{{data.criticRatings}} Ratings</ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-center">
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
@@ -45,7 +45,7 @@
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
-        <ion-label class="handle-margin-text">3.2</ion-label>
+        <ion-label class="handle-margin-text">{{data.publicScore}}</ion-label>
         <ion-icon
           name="beer-outline"
           class="handle-margin handle-icon-public"
@@ -54,7 +54,7 @@
 
       <ion-card-subtitle class="ion-text-center">PUBLICS</ion-card-subtitle>
 
-      <ion-card-subtitle class="ion-text-center">15 Ratings</ion-card-subtitle>
+      <ion-card-subtitle class="ion-text-center">{{data.publicRatings}} Ratings</ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-center">
         <ion-button shape="round" fill="outline" color="secondary">
@@ -77,13 +77,12 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title class="ion-text-start">
-        <!-- Aparece un icono u otro dependiendo de si es critico o publico -->
-        <ion-icon name="diamond-outline" class="handle-icon-critics"></ion-icon>
-        <ion-icon
+        <ion-icon *ngIf="user.isCritic" name="diamond-outline" class="handle-icon-critics"></ion-icon>
+        <ion-icon *ngIf="!user.isCritic"
           name="beer-outline"
           class="handle-margin handle-icon-public"
         ></ion-icon>
-        FirstName and LastName
+        {{user.firstName}} {{user.lastName}}
       </ion-card-title>
 
       <ion-card-subtitle class="ion-text-center">
@@ -153,58 +152,21 @@
       size="large"
       class="handle-icon"
     ></ion-icon>
-    <ion-label class="handle-label">MOVIE INFO</ion-label>
+    <ion-label class="handle-label">{{IsTv ? 'SHOW' : 'MOVIE'}} INFO</ion-label>
   </ion-button>
 
   <div class="handle-movie-info">
     <p>
-      <span class="handle-movie-info-titles">Description: </span>Lorem ipsum
-      dolor sit amet, consectetur adipisicing elit. Ab molestiae voluptas, quia
-      odit iusto, sit corporis nam earum quod voluptates doloribus quisquam
-      dicta numquam dignissimos ex, excepturi perferendis vel nesciunt
-      recusandae. Iure nam fugiat rerum sit repellendus unde labore cumque!
+      <span class="handle-movie-info-titles">Overview: </span>{{data.overview}}
     </p>
-    <p><span class="handle-movie-info-titles">Genre: </span>SEXO</p>
+    <p><span class="handle-movie-info-titles">Genres: </span>{{setGenres(data.genres)}}</p>
     <p>
-      <span class="handle-movie-info-titles">Original Language: </span>Maracucho
-      rajao
+      <span class="handle-movie-info-titles">Original Language: </span>{{data.language}}
     </p>
     <p>
-      <span class="handle-movie-info-titles">Release Date: </span>69/69/6969
+      <span class="handle-movie-info-titles">Release Date: </span>{{setDate(data.date)}}
     </p>
-    <p><span class="handle-movie-info-titles">Adult: </span>OhYes!</p>
-  </div>
-
-  <!-- Agregarle a este div la propiedad hidden para que se oculte cuando sea una peli -->
-  <div>
-    <ion-button fill="clear" color="dark">
-      <ion-icon
-        name="caret-forward-outline"
-        size="large"
-        class="handle-icon"
-      ></ion-icon>
-      <ion-label class="handle-label">SERIE INFO</ion-label>
-    </ion-button>
-
-    <div class="handle-movie-info">
-      <p>
-        <span class="handle-movie-info-titles">Description: </span>Lorem ipsum
-        dolor sit amet, consectetur adipisicing elit. Ab molestiae voluptas,
-        quia odit iusto, sit corporis nam earum quod voluptates doloribus
-        quisquam dicta numquam dignissimos ex, excepturi perferendis vel
-        nesciunt recusandae. Iure nam fugiat rerum sit repellendus unde labore
-        cumque!
-      </p>
-      <p><span class="handle-movie-info-titles">Genre: </span>SEXO</p>
-      <p>
-        <span class="handle-movie-info-titles">Original Language: </span
-        >Maracucho rajao
-      </p>
-      <p>
-        <span class="handle-movie-info-titles">Release Date: </span>69/69/6969
-      </p>
-      <p><span class="handle-movie-info-titles">Adult: </span>OhYes!</p>
-    </div>
+    <p><span class="handle-movie-info-titles">Adult: </span>{{data.adult ? 'Yes' : 'No' }}</p>
   </div>
 
   <ion-button fill="clear" color="dark">
@@ -240,6 +202,5 @@
       </form>
     </ion-card-content>
   </ion-card>
-
-  <app-reviews></app-reviews>
+  <app-reviews *ngFor="let review of reviews.reverse()" [data]="review"></app-reviews>
 </ion-content>

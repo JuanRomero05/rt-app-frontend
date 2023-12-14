@@ -1,6 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { IonModal } from '@ionic/angular';
+import { IonDatetime, IonLoading, IonModal } from '@ionic/angular';
+import { getAllGenres } from 'src/api/resources/genres';
+import { getAllMovies } from 'src/api/resources/movies';
+import { getAllShows } from 'src/api/resources/shows';
 
 @Component({
   selector: 'app-tab1',
@@ -8,12 +11,18 @@ import { IonModal } from '@ionic/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-
+  
   @ViewChild('searchModal') modalSearch: IonModal;
+  @ViewChild('loading') loading: IonLoading;
+  @ViewChild('datetime') datetime: IonDatetime;
 
   segment: string = 'movies'
-
   searchForm: FormGroup;
+  genreOptions: any[] = []
+  movies: any[] = []
+  series: any[] = []
+  genre: number | undefined
+  order: string | undefined
 
   constructor(
     public fb: FormBuilder,
@@ -22,37 +31,31 @@ export class Tab1Page {
       this.searchForm = this.fb.group({
         search: new FormControl(''),
       })
+    this.loading = null as any
+    this.datetime = null as any
+  }
+
+  async ionViewWillEnter() {
+    // set genre options
+    this.loading.present()
+    this.genreOptions.push(        {
+      text: 'None',
+      value: undefined
+    })
+    const request: any = await getAllGenres()
+    request.data.map((genre:any) => {
+      this.genreOptions.push({
+        text: genre.title,
+        value: genre.id
+      })
+    })
+    this.loading.dismiss(null, 'cancel')
   }
 
   public pickerColumnsGenre = [
     {
       name: 'Genre',
-      options: [
-        {
-          text: 'Horror',
-          value: 'horror',
-        },
-        {
-          text: 'Action',
-          value: 'action',
-        },
-        {
-          text: 'Science Fiction',
-          value: 'science-fiction',
-        },
-        {
-          text: 'Drama',
-          value: 'drama',
-        },
-        {
-          text: 'Animation',
-          value: 'animation',
-        },
-        {
-          text: 'Documentary',
-          value: 'documentary',
-        },
-      ],
+      options: this.genreOptions
     },
   ];
 
@@ -60,6 +63,10 @@ export class Tab1Page {
     {
       name: 'OrderBy',
       options: [
+        {
+          text: 'None',
+          value: undefined
+        },
         {
           text: 'New',
           value: 'new',
@@ -70,11 +77,11 @@ export class Tab1Page {
         },
         {
           text: 'Top Score',
-          value: 'top-score',
+          value: 'topscore',
         },
         {
           text: 'Less Score',
-          value: 'less-score',
+          value: 'lowscore',
         },
       ],
     },
@@ -88,7 +95,7 @@ export class Tab1Page {
     {
       text: 'Confirm',
       handler: (value: any) => {
-        console.log(`You selected a ${value.Genre.text} Genre`);
+        this.genre = value.Genre.value;
       },
     },
   ];
@@ -101,7 +108,7 @@ export class Tab1Page {
     {
       text: 'Confirm',
       handler: (value: any) => {
-        console.log(`You selected a ${value.OrderBy.text} Order by`);
+        this.order = value.OrderBy.value;
       },
     },
   ];
@@ -110,9 +117,27 @@ export class Tab1Page {
     this.modalSearch.dismiss(null, 'cancel');
   }
 
-  sendSearchForm() {
-    console.log('a');
+  async sendSearchForm() {
+    const query = this.searchForm.controls['search'].value
+    const options: any = { search: query }
+    if (this.order)
+      options.order = this.order
+    if (this.genre)
+      options.genre = this.genre
+    if (this.datetime.value)
+      options.year = new Date(<string> this.datetime.value).getFullYear().toString()
 
+    console.log(options)
+
+    this.loading.present()
+    if (this.segment == 'movies') {
+      const request = await getAllMovies(options)
+      this.movies = request.data
+    }
+    if (this.segment == 'series') {
+      const request = await getAllShows(options)
+      this.series = request.data
+    }
+    this.loading.dismiss(null, 'cancel')
   }
-
 }

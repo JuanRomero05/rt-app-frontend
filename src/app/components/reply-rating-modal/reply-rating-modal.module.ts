@@ -2,8 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReplyRatingModalComponent } from './reply-rating-modal.component';
-import { ReviewsModule } from '../reviews/reviews.module';
-
+import { RepliesModule } from '../replies/replies.module';
 
 
 @NgModule({
@@ -11,6 +10,7 @@ import { ReviewsModule } from '../reviews/reviews.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RepliesModule
   ],
   declarations: [ReplyRatingModalComponent],
   exports: [ReplyRatingModalComponent],

@@ -193,7 +193,7 @@
             fill="outline"
             shape="round"
             [strong]="true"
-            [disabled]="!reviewForm.get('input-review')?.value"
+            [disabled]="!reviewForm.controls['input-review'].value || creating"
             (click)="postReview()"
           >
             Send
@@ -202,5 +202,5 @@
       </form>
     </ion-card-content>
   </ion-card>
-  <app-reviews *ngFor="let review of reviews.reverse()" [data]="review"></app-reviews>
+  <app-reviews *ngFor="let review of reviews" [data]="review"></app-reviews>
 </ion-content>

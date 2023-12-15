@@ -41,7 +41,7 @@ export interface Rating {
 }
 
 export interface MediaParams {
-    search: string,
+    search?: string,
     order?: string,
     year?: number,
     genre?: number

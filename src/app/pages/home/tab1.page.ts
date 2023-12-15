@@ -42,13 +42,24 @@ export class Tab1Page {
       text: 'None',
       value: undefined
     })
-    const request: any = await getAllGenres()
+    let request: any = await getAllGenres()
     request.data.map((genre:any) => {
       this.genreOptions.push({
         text: genre.title,
         value: genre.id
       })
     })
+    
+    if (this.movies.length === 0) {
+      request = await getAllMovies({})
+      this.movies = request.data  
+    }
+
+    if (this.series.length === 0) {
+      request = await getAllShows({})
+      this.series = request.data
+    }
+
     this.loading.dismiss(null, 'cancel')
   }
 
@@ -126,8 +137,6 @@ export class Tab1Page {
       options.genre = this.genre
     if (this.datetime.value)
       options.year = new Date(<string> this.datetime.value).getFullYear().toString()
-
-    console.log(options)
 
     this.loading.present()
     if (this.segment == 'movies') {

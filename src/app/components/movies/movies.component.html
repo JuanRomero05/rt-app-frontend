@@ -2,18 +2,10 @@
   <ion-col size="12">
     <ion-card (click)="openCard()">
       <img
-        *ngIf="data.posterUrl"
-        src="{{ data.posterUrl }}"
+        src="{{ data.posterUrl ? data.posterUrl : '../../../assets/cover3.png' }}"
         width="400"
         height="450"
         alt="Imagen de {{ data.title }}"
-      />
-      <img
-        *ngIf="!data.posterUrl"
-        src="../../../assets/cover3.png"
-        width="400"
-        height="450"
-        alt="Imagen no disponible"
       />
 
       <ion-card-header>

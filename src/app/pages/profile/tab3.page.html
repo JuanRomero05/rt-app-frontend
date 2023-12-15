@@ -44,8 +44,8 @@
     <ion-row class="wrapper">
       <ion-col size="1">
         <ion-icon
-          name="beer-outline"
-          class="handle-icon-public"
+          name="{{user.isCritic ? 'diamond' : 'beer'}}-outline"
+          class="handle-icon-{{ user.isCritic ? 'critics' : 'public'}}"
           size="large"
         ></ion-icon>
       </ion-col>

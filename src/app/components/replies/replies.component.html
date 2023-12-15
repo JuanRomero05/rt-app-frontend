@@ -28,7 +28,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button fill="clear" color="medium" size="small" (click)="removeReply()">
+        <ion-button *ngIf="removable" fill="clear" color="medium" size="small" (click)="removeReply()">
           <ion-icon name="trash-outline" slot="start"></ion-icon>
         </ion-button>
       </ion-col>

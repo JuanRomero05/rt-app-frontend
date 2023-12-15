@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { getUserById } from 'src/api/resources/users';
 import { deleteComment } from 'src/api/resources/comments';
+import { getUserId } from 'src/storage/auth';
 
 @Component({
   selector: 'app-replies',
@@ -11,6 +12,7 @@ export class RepliesComponent implements OnInit {
   @Input() data: any
   user: any
   exists: boolean
+  removable: boolean = false
 
   constructor() {
     this.exists = true
@@ -19,6 +21,10 @@ export class RepliesComponent implements OnInit {
   async ngOnInit() {
     const request = await getUserById(this.data.userId)
     this.user = request.data
+    // verify if authenticated user is the reply creator
+    const authUserId = await getUserId()
+    if (authUserId == this.data.userId)
+      this.removable = true
   }
 
   setDate(date: string){

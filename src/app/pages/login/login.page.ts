@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { IonLoading, AlertController } from '@ionic/angular';
 import { logIn } from 'src/api/resources/auth';
 import { getAuthUser } from 'src/api/resources/users';
-import { getToken, storeToken, storeUserId } from 'src/storage/auth';
+import { clearToken, clearUserId, getToken, getUserId, storeToken, storeUserId } from 'src/storage/auth';
 import { createAlert } from 'src/utils/alert';
 
 @Component({
@@ -39,12 +39,24 @@ export class LoginPage implements OnInit {
   }
 
   async ionViewWillEnter(){
-    // verify if there is an available session
     this.loading.present()
+    const id = await getUserId()
     const token = await getToken()
+  
+    // token
+    if (token && id) {
+      const request = await getAuthUser()
+      // valid token
+      if (request.code == 200 || request.data.id == id){
+        this.loading.dismiss(null, 'cancel')
+        await this.router.navigate(['/tabs/home'])
+        return
+      }
+    }
+
+    await clearToken()
+    await clearUserId()
     this.loading.dismiss(null, 'cancel')
-    if (token) 
-      await this.router.navigate(['/tabs/home']);
   }
 
   togglePasswordVisibility() {

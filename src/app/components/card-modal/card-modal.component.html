@@ -88,58 +88,58 @@
       <ion-card-subtitle class="ion-text-center">
         <ion-button
           fill="clear"
-          [color]="isClicked ? 'warning' : 'dark'"
-          (click)="toggleClicked()"
+          [color]="stars[0] ? 'warning' : 'dark'"
+          (click)="setRate(1)"
         >
           <ion-icon
-            [name]="isClicked ? 'star' : 'star-outline'"
+            [name]="stars[0] ? 'star' : 'star-outline'"
             class="handle-icon-starts-rate"
           ></ion-icon>
         </ion-button>
         <ion-button
           fill="clear"
-          [color]="isClicked ? 'warning' : 'dark'"
-          (click)="toggleClicked()"
+          [color]="stars[1] ? 'warning' : 'dark'"
+          (click)="setRate(2)"
         >
           <ion-icon
-            [name]="isClicked ? 'star' : 'star-outline'"
+            [name]="stars[1] ? 'star' : 'star-outline'"
             class="handle-icon-starts-rate"
           ></ion-icon>
         </ion-button>
         <ion-button
           fill="clear"
-          [color]="isClicked ? 'warning' : 'dark'"
-          (click)="toggleClicked()"
+          [color]="stars[2] ? 'warning' : 'dark'"
+          (click)="setRate(3)"
         >
           <ion-icon
-            [name]="isClicked ? 'star' : 'star-outline'"
+            [name]="stars[2] ? 'star' : 'star-outline'"
             class="handle-icon-starts-rate"
           ></ion-icon>
         </ion-button>
         <ion-button
           fill="clear"
-          [color]="isClicked ? 'warning' : 'dark'"
-          (click)="toggleClicked()"
+          [color]="stars[3] ? 'warning' : 'dark'"
+          (click)="setRate(4)"
         >
           <ion-icon
-            [name]="isClicked ? 'star' : 'star-outline'"
+            [name]="stars[3] ? 'star' : 'star-outline'"
             class="handle-icon-starts-rate"
           ></ion-icon>
         </ion-button>
         <ion-button
           fill="clear"
-          [color]="isClicked ? 'warning' : 'dark'"
-          (click)="toggleClicked()"
+          [color]="stars[4] ? 'warning' : 'dark'"
+          (click)="setRate(5)"
         >
           <ion-icon
-            [name]="isClicked ? 'star' : 'star-outline'"
+            [name]="stars[4] ? 'star' : 'star-outline'"
             class="handle-icon-starts-rate"
           ></ion-icon>
         </ion-button>
       </ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-end">
-        <ion-button fill="outline" color="success" shape="round">
+        <ion-button fill="outline" color="success" shape="round" (click)="submitRate()">
           Submit
         </ion-button>
       </ion-card-subtitle>

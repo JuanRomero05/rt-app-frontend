@@ -11,7 +11,7 @@
 
 <ion-content class="ion-padding">
   <ion-card>
-    <img src="{{ data.posterUrl }}" width="400" height="350" alt="Null image" />
+    <img src="{{ data.posterUrl ? data.posterUrl : '../../../assets/cover3.png' }}" width="400" height="350" alt="Null image" />
 
     <ion-card-header>
       <ion-card-title class="ion-text-center handle-title">
@@ -59,6 +59,7 @@
 
       <ion-card-subtitle class="ion-text-center">
         <ion-button
+          *ngIf="data.trailerUrl"
           id="open-modal"
           shape="round"
           fill="outline"
@@ -79,7 +80,7 @@
   >
     <ion-content class="ion-padding">
       <video
-        src="../../../assets/video_prueba.mp4"
+        src="{{data.trailerUrl}}"
         controls
         width="380"
       ></video>

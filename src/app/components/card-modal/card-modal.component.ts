@@ -24,6 +24,7 @@ export class CardModalComponent implements OnInit{
   user: any
   reviews: any[] = []
   stars: boolean[] = [false, false, false, false, false]
+  creating: boolean = false
 
   constructor(
     private cardModalCtrl: ModalController,
@@ -67,6 +68,7 @@ export class CardModalComponent implements OnInit{
   }
 
   async submitRate(){
+    this.creating = true
     let score = 0
     for (let i=0; i<this.stars.length; i++){
       if (!this.stars[i])
@@ -78,7 +80,7 @@ export class CardModalComponent implements OnInit{
       mediaId: this.data.id,
       score: String(score)
     })
-    console.log('done')
+    this.creating = false
   }
 
   cancel() {
@@ -122,6 +124,7 @@ export class CardModalComponent implements OnInit{
   } */
 
   async postReview() {
+    this.creating = true
     const review = await createReview({
       userId: this.user.id,
       mediaId: this.Id,
@@ -129,5 +132,6 @@ export class CardModalComponent implements OnInit{
     })
     this.reviewForm.controls['input-review'].setValue('')
     this.reviews.push(review.data)
+    this.creating = false
   }
 }

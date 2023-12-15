@@ -41,7 +41,7 @@
       </ion-col>
 
       <ion-col>
-        <ion-button fill="clear" color="medium" size="small" (click)="removeReview()">
+        <ion-button *ngIf="removable" fill="clear" color="medium" size="small" (click)="removeReview()">
           <ion-icon name="trash-outline" slot="start"></ion-icon>
         </ion-button>
       </ion-col>

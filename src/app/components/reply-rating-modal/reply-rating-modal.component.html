@@ -56,7 +56,7 @@
             fill="outline"
             shape="round"
             [strong]="true"
-            [disabled]="!replyReviewForm.get('input-reply-review')?.value"
+            [disabled]="!replyReviewForm.controls['input-reply-review'].value || creating"
             (click)="postReplyReview()"
           >
             Send
@@ -66,5 +66,5 @@
     </ion-card-content>
   </ion-card>
 
-  <app-replies *ngFor="let reply of replies.reverse()" [data]="reply"></app-replies>
+  <app-replies *ngFor="let reply of replies" [data]="reply"></app-replies>
 </ion-content>

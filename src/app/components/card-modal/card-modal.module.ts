@@ -11,7 +11,7 @@ import { ReviewsModule } from '../reviews/reviews.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ReviewsModule
+    ReviewsModule,
   ],
   declarations: [CardModalComponent],
   exports: [CardModalComponent],

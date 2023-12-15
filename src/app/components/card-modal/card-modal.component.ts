@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { IonModal, ModalController } from '@ionic/angular';
 import { getMovieById, getReviewsByMovie } from 'src/api/resources/movies';
 import { rate } from 'src/api/resources/ratings';
 import { createReview } from 'src/api/resources/reviews';
@@ -13,11 +13,13 @@ import { getUserId } from 'src/storage/auth';
   templateUrl: './card-modal.component.html',
   styleUrls: ['./card-modal.component.scss'],
 })
-export class CardModalComponent implements OnInit{
+export class CardModalComponent implements OnInit {
 
   @Input() Id: any
   @Input() IsTv: any
-  
+  @ViewChild('modalTrailer') modalTrailer: IonModal;
+
+
   isClicked = false;
   data: any
   reviewForm: FormGroup;
@@ -27,18 +29,20 @@ export class CardModalComponent implements OnInit{
   creating: boolean = false
 
   constructor(
-    private cardModalCtrl: ModalController,
+    private modalController: ModalController,
     public fb: FormBuilder
   ) {
     this.reviewForm = this.fb.group({
       'input-review': new FormControl,
     })
+    this.modalTrailer = null as any
+
   }
 
   async ngOnInit() {
     // movie/show info
     let request
-    if (this.IsTv){
+    if (this.IsTv) {
       request = await getShowById(this.Id)
     } else {
       request = await getMovieById(this.Id)
@@ -50,7 +54,7 @@ export class CardModalComponent implements OnInit{
 
     // current user info
     const id = await getUserId()
-    request = await getUserById(parseInt(<string> id))
+    request = await getUserById(parseInt(<string>id))
     this.user = request.data
 
     // current user rate
@@ -59,7 +63,7 @@ export class CardModalComponent implements OnInit{
     console.log(this.stars)
 
     // reviews
-    if (this.IsTv){
+    if (this.IsTv) {
       request = await getReviewsByShow(this.Id)
     } else {
       request = await getReviewsByMovie(this.Id)
@@ -67,10 +71,24 @@ export class CardModalComponent implements OnInit{
     this.reviews = request.data
   }
 
-  async submitRate(){
+  /* async openTrailerModal() {
+    const modal = await this.modalController.create({
+      component: TrailerModalComponent, // Reemplaza "TrailerModalComponent" con el nombre de tu componente modal
+      componentProps: {
+        videoUrl: '../../../assets/video_prueba.mp4' // Reemplaza "URL_DEL_VIDEO" con la URL del video que deseas reproducir
+      }
+    });
+    return await modal.present();
+  } */
+
+  cancelModalTrailer() {
+    this.modalTrailer.dismiss(null, 'cancel');
+  }
+
+  async submitRate() {
     this.creating = true
     let score = 0
-    for (let i=0; i<this.stars.length; i++){
+    for (let i = 0; i < this.stars.length; i++) {
       if (!this.stars[i])
         break
       score++
@@ -83,12 +101,8 @@ export class CardModalComponent implements OnInit{
     this.creating = false
   }
 
-  cancel() {
-    return this.cardModalCtrl.dismiss(null, 'cancel');
-  }
-
   setRate(star: number) {
-    for(let i=0; i<this.stars.length; i++){
+    for (let i = 0; i < this.stars.length; i++) {
       if (i >= star) {
         this.stars[i] = false
         continue
@@ -97,13 +111,13 @@ export class CardModalComponent implements OnInit{
     }
   }
 
-  setYear(date: string){
+  setYear(date: string) {
     return new Date(date).getFullYear().toString()
   }
 
-  setGenres(genres: any[]){
+  setGenres(genres: any[]) {
     let result = ''
-    for (let i=0; i<genres.length; i++) {
+    for (let i = 0; i < genres.length; i++) {
       result += genres[i].title
       if (i != genres.length - 1)
         result += ','
@@ -112,11 +126,15 @@ export class CardModalComponent implements OnInit{
     return result
   }
 
-  setDate(date: string){
+  setDate(date: string) {
     const year = new Date(date).getFullYear().toString()
     const month = new Date(date).getMonth().toString()
     const day = new Date(date).getDay().toString()
     return `${month}/${day}/${year}`
+  }
+
+  cancel() {
+    this.modalController.dismiss(null, 'cancel')
   }
 
   /* confirm() {

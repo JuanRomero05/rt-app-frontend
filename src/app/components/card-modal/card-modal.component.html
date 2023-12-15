@@ -5,25 +5,22 @@
         <ion-icon name="arrow-back-outline" size="large"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{data.title}}</ion-title>
+    <ion-title>{{ data.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-card>
-    <img
-      src={{data.posterUrl}}
-      width="400"
-      height="350"
-      alt="Null image"
-    />
+    <img src="{{ data.posterUrl }}" width="400" height="350" alt="Null image" />
 
     <ion-card-header>
       <ion-card-title class="ion-text-center handle-title">
-        {{data.title}}
+        {{ data.title }}
       </ion-card-title>
 
-      <ion-card-subtitle class="ion-text-center">{{setYear(data.date)}}</ion-card-subtitle>
+      <ion-card-subtitle class="ion-text-center">{{
+        setYear(data.date)
+      }}</ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-center">
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
@@ -31,13 +28,15 @@
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
-        <ion-label class="handle-margin-text">{{data.criticScore}}</ion-label>
+        <ion-label class="handle-margin-text">{{ data.criticScore }}</ion-label>
         <ion-icon name="diamond-outline" class="handle-icon-critics"></ion-icon>
       </ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-center">CRITICS</ion-card-subtitle>
 
-      <ion-card-subtitle class="ion-text-center">{{data.criticRatings}} Ratings</ion-card-subtitle>
+      <ion-card-subtitle class="ion-text-center"
+        >{{ data.criticRatings }} Ratings</ion-card-subtitle
+      >
 
       <ion-card-subtitle class="ion-text-center">
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
@@ -45,7 +44,7 @@
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
         <ion-icon name="star-outline" class="handle-icon-starts"></ion-icon>
-        <ion-label class="handle-margin-text">{{data.publicScore}}</ion-label>
+        <ion-label class="handle-margin-text">{{ data.publicScore }}</ion-label>
         <ion-icon
           name="beer-outline"
           class="handle-margin handle-icon-public"
@@ -54,16 +53,63 @@
 
       <ion-card-subtitle class="ion-text-center">PUBLICS</ion-card-subtitle>
 
-      <ion-card-subtitle class="ion-text-center">{{data.publicRatings}} Ratings</ion-card-subtitle>
+      <ion-card-subtitle class="ion-text-center"
+        >{{ data.publicRatings }} Ratings</ion-card-subtitle
+      >
 
       <ion-card-subtitle class="ion-text-center">
-        <ion-button shape="round" fill="outline" color="secondary">
+        <ion-button
+          id="open-modal"
+          shape="round"
+          fill="outline"
+          color="secondary"
+        >
           <ion-icon name="play" class="handle-margin"></ion-icon>
           View trailer
         </ion-button>
       </ion-card-subtitle>
     </ion-card-header>
   </ion-card>
+
+  <ion-modal
+    #modal
+    trigger="open-modal"
+    [initialBreakpoint]="0.4"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+  >
+    <ion-content class="ion-padding">
+      <video
+        src="../../../assets/video_prueba.mp4"
+        controls
+        width="380"
+      ></video>
+    </ion-content>
+  </ion-modal>
+
+  <!-- <ion-modal #modalTrailer trigger="open-modal">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-icon
+            name="arrow-back-outline"
+            (click)="cancelModalTrailer()"
+            class="handle-back-button"
+            size="large"
+          ></ion-icon>
+        </ion-buttons>
+        <ion-title>{{ data.title }} Trailer</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <div class="ion-text-center">
+        <video
+          src="../../../assets/video_prueba.mp4"
+          controls
+          width="380"
+        ></video>
+      </div>
+    </ion-content>
+  </ion-modal> -->
 
   <ion-button fill="clear" color="dark">
     <ion-icon
@@ -77,12 +123,17 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title class="ion-text-start">
-        <ion-icon *ngIf="user.isCritic" name="diamond-outline" class="handle-icon-critics"></ion-icon>
-        <ion-icon *ngIf="!user.isCritic"
+        <ion-icon
+          *ngIf="user.isCritic"
+          name="diamond-outline"
+          class="handle-icon-critics"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!user.isCritic"
           name="beer-outline"
           class="handle-margin handle-icon-public"
         ></ion-icon>
-        {{user.firstName}} {{user.lastName}}
+        {{ user.firstName }} {{ user.lastName }}
       </ion-card-title>
 
       <ion-card-subtitle class="ion-text-center">
@@ -139,7 +190,12 @@
       </ion-card-subtitle>
 
       <ion-card-subtitle class="ion-text-end">
-        <ion-button fill="outline" color="success" shape="round" (click)="submitRate()">
+        <ion-button
+          fill="outline"
+          color="success"
+          shape="round"
+          (click)="submitRate()"
+        >
           Submit
         </ion-button>
       </ion-card-subtitle>
@@ -152,21 +208,32 @@
       size="large"
       class="handle-icon"
     ></ion-icon>
-    <ion-label class="handle-label">{{IsTv ? 'SHOW' : 'MOVIE'}} INFO</ion-label>
+    <ion-label class="handle-label"
+      >{{ IsTv ? "SHOW" : "MOVIE" }} INFO</ion-label
+    >
   </ion-button>
 
   <div class="handle-movie-info">
     <p>
-      <span class="handle-movie-info-titles">Overview: </span>{{data.overview}}
-    </p>
-    <p><span class="handle-movie-info-titles">Genres: </span>{{setGenres(data.genres)}}</p>
-    <p>
-      <span class="handle-movie-info-titles">Original Language: </span>{{data.language}}
+      <span class="handle-movie-info-titles">Overview: </span
+      >{{ data.overview }}
     </p>
     <p>
-      <span class="handle-movie-info-titles">Release Date: </span>{{setDate(data.date)}}
+      <span class="handle-movie-info-titles">Genres: </span
+      >{{ setGenres(data.genres) }}
     </p>
-    <p><span class="handle-movie-info-titles">Adult: </span>{{data.adult ? 'Yes' : 'No' }}</p>
+    <p>
+      <span class="handle-movie-info-titles">Original Language: </span
+      >{{ data.language }}
+    </p>
+    <p>
+      <span class="handle-movie-info-titles">Release Date: </span
+      >{{ setDate(data.date) }}
+    </p>
+    <p>
+      <span class="handle-movie-info-titles">Adult: </span
+      >{{ data.adult ? "Yes" : "No" }}
+    </p>
   </div>
 
   <ion-button fill="clear" color="dark">

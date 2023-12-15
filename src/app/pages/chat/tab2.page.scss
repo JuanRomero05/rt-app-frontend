@@ -1,0 +1,91 @@
+* {
+     margin: 0;
+     padding: 10;
+     box-sizing: border-box;
+     font-family: 'poppins', sans-serif;
+}
+
+.container {
+     width: 100%;
+     height: 100vh;
+     /* background-image: linear-gradient(to right, #1c00f2, #453f96); */
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     color: #fff;
+}
+
+.chatbox {
+     /* background: #1d61c2; */
+     width: 100%;
+     min-width: 25px;
+     display: flex;
+}
+
+.col-1 {
+     flex: 1;
+}
+
+/* .col-2 {
+     flex-basis: 250px;
+     background: #3874c9;
+} */
+
+.msg-row {
+     display: flex;
+     align-items: center;
+     margin: 15px;
+}
+
+.msg-row2 {
+     justify-content: flex-end;
+}
+
+.msg-text {
+     background: rgba(255, 255, 255, 0.1);
+     padding: 15px 10px;
+     border-radius: 8px;
+     flex-basis: 70%;
+     font-weight: 300;
+}
+
+.msg-text2 {
+     justify-content: flex-end;
+}
+
+.msg-text h2 {
+     font-weight: 400;
+     font-size: 18px;
+}
+
+.msg-img {
+     width: 25px;
+     border-radius: 50%;
+     margin: 0 5px;
+}
+
+.col-1 input {
+     border: 0;
+     outline: none;
+     padding: 2px 5px;
+     background: #3874c9;
+     color: #fff;
+     width: 10%;
+     font-size: 16px;
+     font-weight: 300;
+}
+::placeholder {
+     color: #fff;
+}
+
+/* .handle-margin {
+     margin-right: 5px;
+}*/
+
+.handle-icon-critics {
+     color: yellow;
+}
+
+.handle-icon-public {
+     color: red;
+} 

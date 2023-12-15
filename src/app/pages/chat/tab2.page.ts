@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-tab2',
@@ -7,6 +8,19 @@ import { Component } from '@angular/core';
 })
 export class Tab2Page {
 
-  constructor() {}
+  chatForm: FormGroup;
+
+  constructor(
+    public fb: FormBuilder,
+  ) {
+    this.chatForm = this.fb.group({
+      'message': new FormControl('')
+    })
+  }
+
+  sendMessage() {
+    console.log('a');
+
+  }
 
 }

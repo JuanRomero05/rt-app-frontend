@@ -1,17 +1,73 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Chat
-    </ion-title>
+    <ion-title> Chat </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
+<ion-content class="container">
+  <div class="chatbox">
+    <div class="col-1">
+      <div class="msg-row">
+        <div class="msg-text">
+          <h2>Juan Romero</h2>
+          <p>Hola gay</p>
+          <p class="ion-text-end">Fecha</p>
+        </div>
 
-  <!-- <app-explore-container name="Tab 2 page"></app-explore-container> -->
+        <ion-icon
+          name="diamond-outline"
+          size="large"
+          class="handle-margin handle-icon-critics msg-img"
+        ></ion-icon>
+      </div>
+
+      <div class="msg-row msg-row2">
+        <ion-icon
+          name="beer-outline"
+          size="large"
+          class="handle-margin handle-icon-public msg-img"
+        ></ion-icon>
+
+        <div class="msg-text">
+          <h2>Giovanni Urdaneta</h2>
+          <p>Hola super gay!</p>
+          <p class="ion-text-end">Fecha</p>
+        </div>
+      </div>
+
+      <div class="msg-row">
+        <div class="msg-text">
+          <h2>Juan Romero</h2>
+          <p>Hola gay again!</p>
+          <p class="ion-text-end">Fecha</p>
+        </div>
+
+        <ion-icon
+          name="diamond-outline"
+          size="large"
+          class="handle-margin handle-icon-critics msg-img"
+        ></ion-icon>
+      </div>
+    </div>
+  </div>
+  <div class="ion-padding">
+    <ion-card class="ion-padding">
+      <form [formGroup]="chatForm" style="display: flex; align-items: center">
+        <ion-input
+          formControlName="message"
+          type="text"
+          placeholder="Message..."
+          [clearInput]="true"
+          style="flex: 1"
+        ></ion-input>
+        <ion-button
+          (click)="sendMessage()"
+          [disabled]="!chatForm.get('message')?.value"
+          fill="clear"
+        >
+          <ion-icon name="send-outline"></ion-icon>
+        </ion-button>
+      </form>
+    </ion-card>
+  </div>
 </ion-content>

@@ -131,7 +131,9 @@ export class Tab1Page {
 
   async sendSearchForm() {
     const query = this.searchForm.controls['search'].value
-    const options: any = { search: query, page: 1 }
+    const options: any = { page: 1 }
+    if (query)
+      options.search = query
     if (this.order)
       options.order = this.order
     if (this.genre)

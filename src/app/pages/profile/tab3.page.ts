@@ -21,6 +21,7 @@ export class Tab3Page implements OnInit {
   eyeIcon: string = 'eye-outline';
   eyeIconRepeat: string = 'eye-outline';
   user: any
+  updating: boolean = false
 
   @ViewChild('menu') menu: IonMenu;
   @ViewChild('loading') loading: IonLoading;
@@ -135,6 +136,7 @@ export class Tab3Page implements OnInit {
   }
 
   async saveEditData() {
+    this.updating = true
     const { controls } = this.editProfileForm
     if (!controls['firstName'].value || !controls['lastName'].value){
       const alert = await createAlert(
@@ -143,6 +145,7 @@ export class Tab3Page implements OnInit {
         "Empty name or last name are not allowed"
       )
       await alert.present()
+      this.updating = false
       return
     }
     const body: any = { 
@@ -158,6 +161,7 @@ export class Tab3Page implements OnInit {
           'Update failed',
           "Passwords don't match"
         )
+        this.updating = false
         await alert.present()
         return
       }
@@ -171,6 +175,7 @@ export class Tab3Page implements OnInit {
         request.msg
       )
       await alert.present()
+      this.updating = false
       return
     }
     request = await getUserById(request.data.id)
@@ -181,7 +186,7 @@ export class Tab3Page implements OnInit {
       'Your account has been successfully updated'
     )
     await alert.present()
-    console.log(this.user)
+    this.updating = false
     this.resetEditForm()
   }
 }

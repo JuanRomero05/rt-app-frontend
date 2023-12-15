@@ -17,6 +17,7 @@ export class ReplyRatingModalComponent implements OnInit {
   replyReviewForm: FormGroup;
   replies: any[] = []
   user: any
+  creating: boolean = false
 
   constructor(
     private replyRatingModalCtrl: ModalController,
@@ -39,6 +40,7 @@ export class ReplyRatingModalComponent implements OnInit {
   }
 
   async postReplyReview() {
+    this.creating = true
     const review = await createComment({
       userId: this.user.id,
       reviewId: this.Review.id,
@@ -46,6 +48,7 @@ export class ReplyRatingModalComponent implements OnInit {
     })
     this.replyReviewForm.controls['input-reply-review'].setValue('')
     this.replies.push(review.data)
+    this.creating = false
   }
 
   setDate(date: string){

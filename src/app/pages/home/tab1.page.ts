@@ -156,10 +156,8 @@ export class Tab1Page {
 
   async handleScroll(event: any){
     this.refreshOptions.page++
-    console.log('start')
     if (this.segment == 'movies') {
       const request = await getAllMovies(this.refreshOptions)
-      console.log(request.data)
       this.movies = [...this.movies, ...request.data]
     }
     if (this.segment == 'series') {

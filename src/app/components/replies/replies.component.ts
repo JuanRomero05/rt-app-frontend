@@ -35,7 +35,7 @@ export class RepliesComponent implements OnInit {
   }
 
   async removeReply() {
-    await deleteComment(this.data.id)
     this.exists = false
+    await deleteComment(this.data.id)
   }
 }

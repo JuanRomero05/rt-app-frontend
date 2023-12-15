@@ -47,7 +47,7 @@ export class ReviewsComponent implements OnInit {
   }
 
   async removeReview() {
-    await deleteReview(this.data.id)
     this.exists = false
+    await deleteReview(this.data.id)
   }
 }

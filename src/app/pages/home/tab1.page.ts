@@ -23,6 +23,7 @@ export class Tab1Page {
   series: any[] = []
   genre: number | undefined
   order: string | undefined
+  refreshOptions: any = { page: 1 }
 
   constructor(
     public fb: FormBuilder,
@@ -130,13 +131,16 @@ export class Tab1Page {
 
   async sendSearchForm() {
     const query = this.searchForm.controls['search'].value
-    const options: any = { search: query }
+    const options: any = { search: query, page: 1 }
     if (this.order)
       options.order = this.order
     if (this.genre)
       options.genre = this.genre
     if (this.datetime.value)
       options.year = new Date(<string> this.datetime.value).getFullYear().toString()
+
+    // store options for refreshing
+    this.refreshOptions = options
 
     this.loading.present()
     if (this.segment == 'movies') {
@@ -148,5 +152,20 @@ export class Tab1Page {
       this.series = request.data
     }
     this.loading.dismiss(null, 'cancel')
+  }
+
+  async handleScroll(event: any){
+    this.refreshOptions.page++
+    console.log('start')
+    if (this.segment == 'movies') {
+      const request = await getAllMovies(this.refreshOptions)
+      console.log(request.data)
+      this.movies = [...this.movies, ...request.data]
+    }
+    if (this.segment == 'series') {
+      const request = await getAllShows(this.refreshOptions)
+      this.series = [...this.series, ...request.data]
+    }
+    event?.target.complete()
   }
 }

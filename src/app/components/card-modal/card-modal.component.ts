@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { getMovieById, getReviewsByMovie } from 'src/api/resources/movies';
+import { rate } from 'src/api/resources/ratings';
 import { createReview } from 'src/api/resources/reviews';
 import { getReviewsByShow, getShowById } from 'src/api/resources/shows';
 import { getAuthUser, getUserById } from 'src/api/resources/users';
@@ -22,6 +23,7 @@ export class CardModalComponent implements OnInit{
   reviewForm: FormGroup;
   user: any
   reviews: any[] = []
+  stars: boolean[] = [false, false, false, false, false]
 
   constructor(
     private cardModalCtrl: ModalController,
@@ -33,6 +35,7 @@ export class CardModalComponent implements OnInit{
   }
 
   async ngOnInit() {
+    // movie/show info
     let request
     if (this.IsTv){
       request = await getShowById(this.Id)
@@ -44,10 +47,17 @@ export class CardModalComponent implements OnInit{
     if (!this.data.posterUrl)
       this.data.posterUrl = './../../assets/cover3.png'
 
+    // current user info
     const id = await getUserId()
     request = await getUserById(parseInt(<string> id))
     this.user = request.data
 
+    // current user rate
+    const userStars = this.data.userRate
+    this.setRate(userStars)
+    console.log(this.stars)
+
+    // reviews
     if (this.IsTv){
       request = await getReviewsByShow(this.Id)
     } else {
@@ -56,12 +66,33 @@ export class CardModalComponent implements OnInit{
     this.reviews = request.data
   }
 
-  toggleClicked() {
-    this.isClicked = !this.isClicked;
+  async submitRate(){
+    let score = 0
+    for (let i=0; i<this.stars.length; i++){
+      if (!this.stars[i])
+        break
+      score++
+    }
+    await rate({
+      userId: this.user.id,
+      mediaId: this.data.id,
+      score: String(score)
+    })
+    console.log('done')
   }
 
   cancel() {
     return this.cardModalCtrl.dismiss(null, 'cancel');
+  }
+
+  setRate(star: number) {
+    for(let i=0; i<this.stars.length; i++){
+      if (i >= star) {
+        this.stars[i] = false
+        continue
+      }
+      this.stars[i] = true
+    }
   }
 
   setYear(date: string){

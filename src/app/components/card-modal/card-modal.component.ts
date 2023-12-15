@@ -4,7 +4,8 @@ import { ModalController } from '@ionic/angular';
 import { getMovieById, getReviewsByMovie } from 'src/api/resources/movies';
 import { createReview } from 'src/api/resources/reviews';
 import { getReviewsByShow, getShowById } from 'src/api/resources/shows';
-import { getAuthUser } from 'src/api/resources/users';
+import { getAuthUser, getUserById } from 'src/api/resources/users';
+import { getUserId } from 'src/storage/auth';
 
 @Component({
   selector: 'app-card-modal',
@@ -43,12 +44,10 @@ export class CardModalComponent implements OnInit{
     if (!this.data.posterUrl)
       this.data.posterUrl = './../../assets/cover3.png'
 
-    this.user = { 
-      firstName: 'Angel',
-      lastName: 'Di Maria', 
-      id: 1, 
-      isCritic: false 
-    }
+    const id = await getUserId()
+    request = await getUserById(parseInt(<string> id))
+    this.user = request.data
+
     if (this.IsTv){
       request = await getReviewsByShow(this.Id)
     } else {

@@ -1,13 +1,14 @@
 import { Component, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IonModal, ModalController } from '@ionic/angular';
+import { AlertController, IonModal, ModalController } from '@ionic/angular';
 import { getMovieById, getReviewsByMovie } from 'src/api/resources/movies';
 import { rate } from 'src/api/resources/ratings';
 import { createReview } from 'src/api/resources/reviews';
 import { getReviewsByShow, getShowById } from 'src/api/resources/shows';
 import { getAuthUser, getUserById } from 'src/api/resources/users';
 import { getUserId } from 'src/storage/auth';
+import { createAlert } from 'src/utils/alert';
 
 @Component({
   selector: 'app-card-modal',
@@ -30,6 +31,7 @@ export class CardModalComponent implements OnInit {
   creating: boolean = false
 
   constructor(
+    public alertController: AlertController,
     private modalController: ModalController,
     public fb: FormBuilder,
     private domSanitizer: DomSanitizer
@@ -110,6 +112,12 @@ export class CardModalComponent implements OnInit {
       score: String(score)
     })
     this.creating = false
+    const alert = await createAlert(
+      this.alertController,
+      'Rate succeed',
+      'You have done rate correctly'
+    )
+    await alert.present()
   }
 
   setRate(star: number) {

@@ -11,7 +11,7 @@ import { getAllShows } from 'src/api/resources/shows';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  
+
   @ViewChild('searchModal') modalSearch: IonModal;
   @ViewChild('loading') loading: IonLoading;
   @ViewChild('datetime') datetime: IonDatetime;
@@ -24,6 +24,7 @@ export class Tab1Page {
   genre: number | undefined
   order: string | undefined
   refreshOptions: any = { page: 1 }
+  noResults: boolean
 
   constructor(
     public fb: FormBuilder,
@@ -34,26 +35,27 @@ export class Tab1Page {
       })
     this.loading = null as any
     this.datetime = null as any
+    this.noResults = false
   }
 
   async ionViewWillEnter() {
     // set genre options
     this.loading.present()
-    this.genreOptions.push(        {
+    this.genreOptions.push({
       text: 'None',
       value: undefined
     })
     let request: any = await getAllGenres()
-    request.data.map((genre:any) => {
+    request.data.map((genre: any) => {
       this.genreOptions.push({
         text: genre.title,
         value: genre.id
       })
     })
-    
+
     if (this.movies.length === 0) {
       request = await getAllMovies({})
-      this.movies = request.data  
+      this.movies = request.data
     }
 
     if (this.series.length === 0) {
@@ -139,7 +141,7 @@ export class Tab1Page {
     if (this.genre)
       options.genre = this.genre
     if (this.datetime.value)
-      options.year = new Date(<string> this.datetime.value).getFullYear().toString()
+      options.year = new Date(<string>this.datetime.value).getFullYear().toString()
 
     // store options for refreshing
     this.refreshOptions = options
@@ -148,15 +150,17 @@ export class Tab1Page {
     if (this.segment == 'movies') {
       const request = await getAllMovies(options)
       this.movies = request.data
+      this.noResults = this.movies.length === 0;
     }
     if (this.segment == 'series') {
       const request = await getAllShows(options)
       this.series = request.data
+      this.noResults = this.series.length === 0;
     }
     this.loading.dismiss(null, 'cancel')
   }
 
-  async handleScroll(event: any){
+  async handleScroll(event: any) {
     this.refreshOptions.page++
     if (this.segment == 'movies') {
       const request = await getAllMovies(this.refreshOptions)

@@ -82,23 +82,44 @@
 
   <ion-modal [keepContentsMounted]="true">
     <ng-template>
-      <ion-datetime #datetime
+      <ion-datetime
+        #datetime
         id="datetime"
         presentation="year"
         [showDefaultButtons]="true"
       >
-    </ion-datetime>
+      </ion-datetime>
     </ng-template>
   </ion-modal>
 
   <div [hidden]="segment != 'movies'">
-    <app-movies *ngFor="let movie of movies" [data]="movie" [IsTv]="false"></app-movies>
+    <app-movies
+      *ngFor="let movie of movies"
+      [data]="movie"
+      [IsTv]="false"
+    ></app-movies>
+
+    <div *ngIf="noResults" class="no-results-div">
+      <ion-icon name="skull" color="danger" size="large"></ion-icon>
+      <ion-label class="handle-label">No results</ion-label>
+    </div>
   </div>
 
   <div [hidden]="segment != 'series'">
-    <app-movies *ngFor="let serie of series" [data]="serie" [IsTv]="true"></app-movies>
+    <app-movies
+      *ngFor="let serie of series"
+      [data]="serie"
+      [IsTv]="true"
+    ></app-movies>
+
+    <div *ngIf="noResults" class="no-results-div">
+      <ion-icon name="skull" color="danger" size="large"></ion-icon>
+      <ion-label class="handle-label">No results</ion-label>
+    </div>
   </div>
   <ion-infinite-scroll (ionInfinite)="handleScroll($event)">
-    <ion-infinite-scroll-content loadingSpinner="crescent"></ion-infinite-scroll-content>
+    <ion-infinite-scroll-content
+      loadingSpinner="crescent"
+    ></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

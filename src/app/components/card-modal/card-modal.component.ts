@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AlertController, IonModal, ModalController } from '@ionic/angular';
 import { getMovieById, getReviewsByMovie } from 'src/api/resources/movies';
 import { rate } from 'src/api/resources/ratings';
@@ -21,7 +21,7 @@ export class CardModalComponent implements OnInit {
   @Input() IsTv: any
   @ViewChild('modalTrailer') modalTrailer: IonModal;
 
-
+  trailer: any
   isClicked = false;
   data: any
   reviewForm: FormGroup;
@@ -52,10 +52,8 @@ export class CardModalComponent implements OnInit {
       request = await getMovieById(this.Id)
     }
     this.data = request.data
-    /* const url = `https://youtube.com/embed/${this.data.trailerUrl}`
-    this.data.trailerUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(url) */
-    console.log(this.data.trailerUrl);
-
+    const url = `https://www.youtube.com/embed/${this.data.trailerUrl}`
+    this.trailer = this.domSanitizer.bypassSecurityTrustResourceUrl(url)
 
     // current user info
     const id = await getUserId()

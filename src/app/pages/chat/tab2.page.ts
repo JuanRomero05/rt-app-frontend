@@ -22,7 +22,6 @@ export class Tab2Page implements OnInit {
 
   @ViewChild('loading') loading: IonLoading;
 
-
   constructor(
     public fb: FormBuilder,
     private socket: Socket

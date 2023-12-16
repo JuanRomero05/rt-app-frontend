@@ -25,6 +25,7 @@ export class Tab1Page {
   order: string | undefined
   refreshOptions: any = { page: 1 }
   noResults: boolean
+  loaded: boolean
 
   constructor(
     public fb: FormBuilder,
@@ -36,11 +37,13 @@ export class Tab1Page {
     this.loading = null as any
     this.datetime = null as any
     this.noResults = false
+    this.loaded = false
   }
 
   async ionViewWillEnter() {
     // set genre options
-    this.loading.present()
+    /* this.loading.present() */
+    this.loaded = false
     this.genreOptions.push({
       text: 'None',
       value: undefined
@@ -63,7 +66,8 @@ export class Tab1Page {
       this.series = request.data
     }
 
-    this.loading.dismiss(null, 'cancel')
+    this.loaded = true
+    /* this.loading.dismiss(null, 'cancel') */
   }
 
   public pickerColumnsGenre = [
@@ -146,7 +150,8 @@ export class Tab1Page {
     // store options for refreshing
     this.refreshOptions = options
 
-    this.loading.present()
+    /* this.loading.present() */
+    this.loaded = false
     if (this.segment == 'movies') {
       const request = await getAllMovies(options)
       this.movies = request.data
@@ -157,7 +162,8 @@ export class Tab1Page {
       this.series = request.data
       this.noResults = this.series.length === 0;
     }
-    this.loading.dismiss(null, 'cancel')
+    /* this.loading.dismiss(null, 'cancel') */
+    this.loaded = true
   }
 
   async handleScroll(event: any) {

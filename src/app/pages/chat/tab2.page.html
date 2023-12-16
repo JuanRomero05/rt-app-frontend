@@ -6,13 +6,18 @@
 
 <ion-content>
   <div class="container">
-    <div class="chatbox" style="flex: 1">
+    <div class="chatbox scroller" style="flex: 1">
       <div class="col-1">
-        <div *ngFor="let message of messages" class="msg-row {{authUser.id==message.userId ? 'msg-row2' : ''}}">
+        <div
+          *ngFor="let message of messages"
+          class="msg-row {{authUser.id==message.userId ? 'msg-row2' : ''}}"
+        >
           <div class="msg-text">
-            <h2>{{message.firstName}} {{message.lastName}}</h2>
+            <span class="msg-name"
+              >{{message.firstName}} {{message.lastName}}</span
+            >
             <p>{{message.content}}</p>
-            <p class="ion-text-end">{{setDate(message.date)}}</p>
+            <p class="ion-text-end">{{formatDate(message.date)}}</p>
           </div>
 
           <ion-icon

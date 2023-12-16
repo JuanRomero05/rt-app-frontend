@@ -11,7 +11,12 @@
 
 <ion-content class="ion-padding">
   <ion-card>
-    <img src="{{ data.posterUrl ? data.posterUrl : '../../../assets/cover3.png' }}" width="400" height="350" alt="Null image" />
+    <img
+      src="{{ data.posterUrl ? data.posterUrl : '../../../assets/cover3.png' }}"
+      width="400"
+      height="350"
+      alt="Null image"
+    />
 
     <ion-card-header>
       <ion-card-title class="ion-text-center handle-title">
@@ -59,7 +64,6 @@
 
       <ion-card-subtitle class="ion-text-center">
         <ion-button
-          *ngIf="data.trailerUrl"
           id="open-modal"
           shape="round"
           fill="outline"
@@ -75,42 +79,21 @@
   <ion-modal
     #modal
     trigger="open-modal"
-    [initialBreakpoint]="0.4"
+    [initialBreakpoint]="0.5"
     [breakpoints]="[0, 0.25, 0.5, 0.75]"
   >
     <ion-content class="ion-padding">
-      <video
-        src="{{data.trailerUrl}}"
-        controls
+      <!-- <video src="{{ data.trailerUrl }}" controls width="380"></video> -->
+      <iframe
         width="380"
-      ></video>
+        height="315"
+        src="https://www.youtube.com/embed/2xwjjEgGLRg"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
     </ion-content>
   </ion-modal>
-
-  <!-- <ion-modal #modalTrailer trigger="open-modal">
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-icon
-            name="arrow-back-outline"
-            (click)="cancelModalTrailer()"
-            class="handle-back-button"
-            size="large"
-          ></ion-icon>
-        </ion-buttons>
-        <ion-title>{{ data.title }} Trailer</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <div class="ion-text-center">
-        <video
-          src="../../../assets/video_prueba.mp4"
-          controls
-          width="380"
-        ></video>
-      </div>
-    </ion-content>
-  </ion-modal> -->
 
   <ion-button fill="clear" color="dark">
     <ion-icon

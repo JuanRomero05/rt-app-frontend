@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { IonModal, ModalController } from '@ionic/angular';
 import { getMovieById, getReviewsByMovie } from 'src/api/resources/movies';
 import { rate } from 'src/api/resources/ratings';
@@ -30,7 +31,8 @@ export class CardModalComponent implements OnInit {
 
   constructor(
     private modalController: ModalController,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private domSanitizer: DomSanitizer
   ) {
     this.reviewForm = this.fb.group({
       'input-review': new FormControl,
@@ -48,9 +50,10 @@ export class CardModalComponent implements OnInit {
       request = await getMovieById(this.Id)
     }
     this.data = request.data
+    /* const url = `https://youtube.com/embed/${this.data.trailerUrl}`
+    this.data.trailerUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(url) */
+    console.log(this.data.trailerUrl);
 
-    if (!this.data.posterUrl)
-      this.data.posterUrl = './../../assets/cover3.png'
 
     // current user info
     const id = await getUserId()
@@ -70,6 +73,14 @@ export class CardModalComponent implements OnInit {
     }
     this.reviews = request.data
   }
+
+  /*  trailerUrl = 'https://www.youtube.com/embed/';
+ 
+   getIframeUrl() {
+     console.log(this.trailerUrl + this.data.trailerUrl);
+ 
+     return this.trailerUrl + this.data.trailerUrl;
+   } */
 
   /* async openTrailerModal() {
     const modal = await this.modalController.create({

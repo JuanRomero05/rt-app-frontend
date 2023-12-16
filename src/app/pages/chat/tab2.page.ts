@@ -11,7 +11,7 @@ import { environment as env } from 'src/environments/environment';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit{
+export class Tab2Page implements OnInit {
 
   sending: boolean = false
   chatForm: FormGroup;
@@ -26,14 +26,14 @@ export class Tab2Page implements OnInit{
       'message': new FormControl('')
     })
     // receive old messages 
-    this.socket.on('initialMessages', (res:Message[]) => {
+    this.socket.on('initialMessages', (res: Message[]) => {
       this.messages = res.reverse()
     })
 
     // receive any message
     this.socket.on('receiveMessage', (message: Message) => {
       const aux = this.messages
-      this.messages=[...aux, message]
+      this.messages = [...aux, message]
     })
   }
 
@@ -65,15 +65,15 @@ export class Tab2Page implements OnInit{
     this.socket.emit('sendMessage', message)
     this.chatForm.controls['message'].setValue('')
     const aux = this.messages
-    this.messages=[...aux, message]
+    this.messages = [...aux, message]
     this.sending = false
   }
 
-  getInitialMessages(data: Message[]){
+  getInitialMessages(data: Message[]) {
     this.messages = data
   }
 
-  setDate(date: string){
+  /* setDate(date: string) {
     const year = new Date(date).getFullYear().toString()
     const month = new Date(date).getMonth().toString()
     const day = new Date(date).getDay().toString()
@@ -83,9 +83,23 @@ export class Tab2Page implements OnInit{
     return `${this.zero(hour)}:${this.zero(minutes)} (${month}/${day}/${year})`
   }
 
-  zero(number: string){
+  zero(number: string) {
     if (parseInt(number) < 10)
       return '0' + number
-    return number 
+    return number
+  } */
+
+  formatDate = (timestamp: string) => {
+    const formattedDate = new Date(timestamp).toLocaleString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit',
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour12: true
+    });
+
+    const [time, date] = formattedDate.split(', ');
+    return `${date} - ${time}`;
   }
 }

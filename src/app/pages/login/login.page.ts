@@ -38,16 +38,16 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  async ionViewWillEnter(){
+  async ionViewWillEnter() {
     this.loading.present()
     const id = await getUserId()
     const token = await getToken()
-  
+
     // token
     if (token && id) {
       const request = await getAuthUser()
       // valid token
-      if (request.code == 200 || request.data.id == id){
+      if (request.code == 200) {
         this.loading.dismiss(null, 'cancel')
         await this.router.navigate(['/tabs/home'])
         return
@@ -81,10 +81,10 @@ export class LoginPage implements OnInit {
       )
       await alert.present()
       return
-    } 
+    }
     // login successful
     await storeToken(request.data.token)
-    const user = await getAuthUser() 
+    const user = await getAuthUser()
     await storeUserId(user.data.id)
     username.setValue('')
     password.setValue('')

@@ -2,22 +2,29 @@
 
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <form [formGroup]="searchForm">
-      <ion-item>
-        <ion-input
-          formControlName="search"
-          placeholder="Search"
-          [clearInput]="true"
-        ></ion-input>
-      </ion-item>
-    </form>
-    <ion-buttons slot="end">
-      <ion-icon
-        name="search-outline"
-        (click)="sendSearchForm()"
-        class="handle-search-button"
-      ></ion-icon>
-    </ion-buttons>
+    <div class="ion-text-center">
+      <ion-icon class="icon-film" name="film-outline"></ion-icon>
+      <span class="handle">FILMPICKS!</span>
+      <ion-icon class="icon-film2" name="videocam-outline"></ion-icon>
+    </div>
+    <div class="ion-text-end">
+      <form [formGroup]="searchForm">
+        <ion-item>
+          <ion-input
+            formControlName="search"
+            placeholder="Search"
+            [clearInput]="true"
+          ></ion-input>
+          <ion-buttons slot="end">
+            <ion-icon
+              name="search-outline"
+              (click)="sendSearchForm()"
+              class="handle-search-button"
+            ></ion-icon>
+          </ion-buttons>
+        </ion-item>
+      </form>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -103,40 +110,6 @@
       <ion-icon name="skull" color="danger" size="large"></ion-icon>
       <ion-label class="handle-label">No results</ion-label>
     </div>
-
-    <!-- <ion-list *ngIf="!loaded">
-      <ion-list-header>
-        <ion-skeleton-text
-          [animated]="true"
-          style="width: 80px"
-        ></ion-skeleton-text>
-      </ion-list-header>
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
-        </ion-thumbnail>
-        <ion-label>
-          <h3>
-            <ion-skeleton-text
-              [animated]="true"
-              style="width: 80%"
-            ></ion-skeleton-text>
-          </h3>
-          <p>
-            <ion-skeleton-text
-              [animated]="true"
-              style="width: 60%"
-            ></ion-skeleton-text>
-          </p>
-          <p>
-            <ion-skeleton-text
-              [animated]="true"
-              style="width: 30%"
-            ></ion-skeleton-text>
-          </p>
-        </ion-label>
-      </ion-item>
-    </ion-list> -->
 
     <ion-list *ngIf="!loaded">
       <ion-card>

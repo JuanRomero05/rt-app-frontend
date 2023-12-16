@@ -28,6 +28,11 @@
 //* Custom properties
 ion-segment-button {
      text-transform: none;
+     color: orangered;
+}
+
+ion-segment-button::part(indicator-background) {
+     background: orangered;
 }
 
 ion-button {
@@ -36,4 +41,8 @@ ion-button {
 
 ion-card {
      border-radius: 15px;
+}
+
+ion-tab-button {
+     color: orangered;
 }

@@ -140,7 +140,7 @@
 
     <ion-list *ngIf="!loaded">
       <ion-card>
-        <ion-thumbnail style="width: 2500px; height: 350px">
+        <ion-thumbnail style="width: 400px; height: 350px">
           <ion-skeleton-text [animated]="true"></ion-skeleton-text>
         </ion-thumbnail>
 
@@ -173,6 +173,29 @@
       <ion-icon name="skull" color="danger" size="large"></ion-icon>
       <ion-label class="handle-label">No results</ion-label>
     </div>
+
+    <ion-list *ngIf="!loaded">
+      <ion-card>
+        <ion-thumbnail style="width: 400px; height: 350px">
+          <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+        </ion-thumbnail>
+
+        <ion-card-header>
+          <ion-card-title>
+            <ion-skeleton-text
+              [animated]="true"
+              style="width: 95%"
+            ></ion-skeleton-text>
+          </ion-card-title>
+          <ion-card-subtitle>
+            <ion-skeleton-text
+              [animated]="true"
+              style="width: 10%"
+            ></ion-skeleton-text>
+          </ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </ion-list>
   </div>
   <ion-infinite-scroll (ionInfinite)="handleScroll($event)">
     <ion-infinite-scroll-content

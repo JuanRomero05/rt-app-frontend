@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Socket } from 'ngx-socket-io';
 import { getUserById } from 'src/api/resources/users';
 import { getUserId } from 'src/storage/auth';
 import { Message } from 'src/types/messages.type';
 import { environment as env } from 'src/environments/environment';
+import { IonLoading } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -17,6 +18,10 @@ export class Tab2Page implements OnInit {
   chatForm: FormGroup;
   messages: Message[] = []
   authUser: any
+  loaded: boolean
+
+  @ViewChild('loading') loading: IonLoading;
+
 
   constructor(
     public fb: FormBuilder,
@@ -35,6 +40,11 @@ export class Tab2Page implements OnInit {
       const aux = this.messages
       this.messages = [...aux, message]
     })
+
+    this.loading = null as any
+
+    this.loaded = false;
+
   }
 
   async ngOnInit() {
@@ -46,8 +56,12 @@ export class Tab2Page implements OnInit {
   }
 
   ionViewWillEnter() {
+    //this.loaded = false
+    this.loading.present()
     // server will emit 'initialMessages' after listening to this event
     this.socket.emit('enterRoom', env.roomId)
+    this.loading.dismiss(null, 'cancel')
+    //this.loaded = true
   }
 
   sendMessage() {
@@ -70,7 +84,11 @@ export class Tab2Page implements OnInit {
   }
 
   getInitialMessages(data: Message[]) {
+    //this.loaded = false
+    this.loading.present()
     this.messages = data
+    this.loading.dismiss(null, 'cancel')
+    //this.loaded = true
   }
 
   /* setDate(date: string) {

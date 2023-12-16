@@ -22,6 +22,7 @@ export class Tab3Page implements OnInit {
   eyeIconRepeat: string = 'eye-outline';
   user: any
   updating: boolean = false
+  loaded: boolean
 
   @ViewChild('menu') menu: IonMenu;
   @ViewChild('loading') loading: IonLoading;
@@ -43,11 +44,13 @@ export class Tab3Page implements OnInit {
       'password': new FormControl,
       'repeatPassword': new FormControl,
     }, { validator: this.pwMatchValidator })
+
+    this.loaded = false
   }
 
   async ngOnInit() {
     const id = await getUserId()
-    if (id){
+    if (id) {
       const request = await getUserById(parseInt(id))
       this.user = request.data
       this.resetEditForm()
@@ -56,10 +59,11 @@ export class Tab3Page implements OnInit {
     await this.router.navigate(['/login'])
   }
 
-  async ionViewWillEnter(){
+  async ionViewWillEnter() {
     this.loading.present()
+    //this.loaded = false
     const id = await getUserId()
-    if (id){
+    if (id) {
       const request = await getUserById(parseInt(id))
       this.user = request.data
       this.resetEditForm()
@@ -67,10 +71,11 @@ export class Tab3Page implements OnInit {
       return
     }
     this.loading.dismiss(null, 'cancel')
+    //this.loaded = true
     await this.router.navigate(['/login'])
   }
-  
-  resetEditForm(){
+
+  resetEditForm() {
     const { controls } = this.editProfileForm
     controls['firstName'].setValue(this.user.firstName)
     controls['lastName'].setValue(this.user.lastName)
@@ -138,7 +143,7 @@ export class Tab3Page implements OnInit {
   async saveEditData() {
     this.updating = true
     const { controls } = this.editProfileForm
-    if (!controls['firstName'].value || !controls['lastName'].value){
+    if (!controls['firstName'].value || !controls['lastName'].value) {
       const alert = await createAlert(
         this.alertController,
         'Update failed',
@@ -148,14 +153,14 @@ export class Tab3Page implements OnInit {
       this.updating = false
       return
     }
-    const body: any = { 
+    const body: any = {
       firstName: controls['firstName'].value,
       lastName: controls['lastName'].value
     }
     // if password fields are not empty, password is evaluated
-    if (controls['password'].value || controls['repeatPassword'].value){
+    if (controls['password'].value || controls['repeatPassword'].value) {
       // password match
-      if (controls['password'].value != controls['repeatPassword'].value){
+      if (controls['password'].value != controls['repeatPassword'].value) {
         const alert = await createAlert(
           this.alertController,
           'Update failed',
@@ -168,7 +173,7 @@ export class Tab3Page implements OnInit {
       body.password = controls['password'].value
     }
     let request = await updateUser(this.user.id, body)
-    if (request.code != 200){
+    if (request.code != 200) {
       const alert = await createAlert(
         this.alertController,
         'Update failed',
